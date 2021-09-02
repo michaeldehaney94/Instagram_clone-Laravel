@@ -49,4 +49,10 @@ class User extends Authenticatable
         
         return $this->hasOne(Profile::class);
     }
+
+    //create relationship between user model and the post model 
+    //to link a user to their multiple posts
+    public function posts() {
+        return $this->hasMany(Post::class); 
+    }
 }

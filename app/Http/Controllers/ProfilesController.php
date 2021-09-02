@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Model\Profile;
+use App\Model\Post;
 
 class ProfilesController extends Controller
 {
@@ -11,7 +13,7 @@ class ProfilesController extends Controller
     {
         $user = User::findOrFail($user); //find specific user account
 
-        return view('home', [
+        return view('profiles.index', [
             'user' => $user,
         ]);
     }
