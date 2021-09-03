@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="row pt-4">
-                    <button type="submit" class="btn btn-primary">Add New Post</button>
+                    <button type="submit" class="btn btn-primary">Add Post</button>
                 </div>
 
             </div>

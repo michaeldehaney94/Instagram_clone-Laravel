@@ -25,11 +25,21 @@ class PostsController extends Controller
             'image'=> ['required', 'image'], //validation rule to add only image
         ]);
 
+        //create path to store uploaded image
+        //the 1st argument is the folder name
+        //the 2nd arguments is the driver for where the file will be stored locally
+        //when an image is uploaded it will be placed in "storage>app>public>uploads"
+        $imagePath = request('image')->store('uploads', 'public');
+
         //pass input data to image and caption field in database,
         //while authenticating the user who is passing the data 
         //to the database and posting the image
-        auth()->user()->posts()->create($data);
-        dd(request()->all());
+        auth()->user()->posts()->create([
+            'caption' => $data['caption'],
+            'image' => $imagePath,
+        ]);
+
+        return redirect('/profile/' . auth()->user()->id);
         
     }
 }
