@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 use App\Models\User;
-use App\Model\Profile;
-use App\Model\Post;
+use App\Models\Profile;
+use App\Models\Post;
 
 class PostsController extends Controller
 {
@@ -31,6 +32,12 @@ class PostsController extends Controller
         //when an image is uploaded it will be placed in "storage>app>public>uploads"
         $imagePath = request('image')->store('uploads', 'public');
 
+        //Intervention Image library use to resize image upon post
+        //locates the image location when resizing
+        //fit(W, H)
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(1200, 1200);
+        $image->save();
+        
         //pass input data to image and caption field in database,
         //while authenticating the user who is passing the data 
         //to the database and posting the image
@@ -41,5 +48,9 @@ class PostsController extends Controller
 
         return redirect('/profile/' . auth()->user()->id);
         
+    }
+
+    public function show(\App\Models\Post $post) {
+        return view('posts.show', compact('post'));
     }
 }

@@ -53,6 +53,6 @@ class User extends Authenticatable
     //create relationship between user model and the post model 
     //to link a user to their multiple posts
     public function posts() {
-        return $this->hasMany(Post::class); 
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC'); 
     }
 }
