@@ -4,14 +4,21 @@
 <div class="container">
     <div class="row">
         <div class="col-3 p-5">
-           <img src="https://avatars.githubusercontent.com/u/42852447?v=4" 
-           alt="" class="rounded-circle" height="153.33px" width="153.33px">
+           <img src="/storage/{{ $user->profile->image }}" class="rounded-circle w-100">
         </div>
         <div class="col-9 pt-5">
             <div class="d-flex justify-content-between align-items-baseline">
                 <h1>{{ $user->username }}</h1>
-                <a href="/p/create">Add New Post</a>
+
+                @can('update', $user->profile)
+                 <a href="/p/create">Add New Post</a>   
+                @endcan
             </div>
+
+            @can('update', $user->profile)
+                <a href="/profile/{{ $user->id }}/edit">Edit Profile</a>
+            @endcan
+
             <div class="d-flex ">
                 <div class="pr-5"><strong>{{ $user->posts->count() }}</strong> posts</div>
                 <div class="pr-5"><strong>51k</strong> followers</div>
