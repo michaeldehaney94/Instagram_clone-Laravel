@@ -39,15 +39,19 @@ class ProfilesController extends Controller
             $imagePath = request('image')->store('profile', 'public');
             $image = Image::make(public_path("storage/{$imagePath}"))->fit('1000', '1000');
             $image->save();
+
+            $imageArray = ['image' => $imagePath];
         }
 
         //array_merge is used to combine arrays together to pass data as one body.
         auth()->user()->profile->update(array_merge(
             $data,
-            ['image' => $imagePath], //this will override 'image' in $data array
+            //this will override 'image' in $data array
+            //['image' => $imagePath], 
+            $imageArray ?? [],
         ));
 
-        //redirects to the authenticated user logged in
+        //redirects to user profile
         return redirect("/profile/{$user->id}");
     }
 }

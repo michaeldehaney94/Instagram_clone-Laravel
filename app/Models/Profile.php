@@ -11,10 +11,19 @@ class Profile extends Model
 
     protected $guarded = []; //disable fillables to make it unnecessary to need them
 
+     
     //creates a relationship with 'User Model' to reference user data
     //using user_id (foreign key) in profile table in database
+    
+    public function followers() {
+        
+        return $this->belongsToMany(User::class);
+    }
+
     public function user() {
 
         return $this->belongsTo(User::class); 
     }
+
+   
 }
