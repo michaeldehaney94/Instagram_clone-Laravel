@@ -16,6 +16,17 @@ class PostsController extends Controller
         $this->middleware('auth');
     }
 
+    //shows all the users posts you are following.
+    public function index() {
+
+        $users = auth()->user()->following()->pluck('profiles.user_id');
+        
+        //with() removes the 1+N problem and extend the limit to load all content at once
+        $posts = Post::whereIn('user_id', $users)->with('user')->latest()->paginate(20);
+
+        return view('posts.index', compact('posts'));
+    }
+
     public function create() {
         return view('posts.create');
     }
